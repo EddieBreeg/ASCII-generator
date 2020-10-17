@@ -1,51 +1,50 @@
 """
 @author: Viet Nguyen <nhviet1009@gmail.com>
 """
-import argparse
-
-import cv2
+import ArgumentParser
+from cv2 import imread, cvtColor, COLOR_BGR2GRAY
+from PIL import ImageFont
 import numpy as np
-
+from os import getcwd
+from os.path import join
 
 def get_args():
-    parser = argparse.ArgumentParser("Image to ASCII")
-    parser.add_argument("--input", type=str, default="data/input.jpg", help="Path to input image")
-    parser.add_argument("--output", type=str, default="data/output.txt", help="Path to output text file")
-    parser.add_argument("--mode", type=str, default="complex", choices=["simple", "complex"],
-                        help="10 or 70 different characters")
-    parser.add_argument("--num_cols", type=int, default=150, help="number of character for output's width")
-    args = parser.parse_args()
-    return args
+    parser = ArgumentParser.ArgumentParser()
+    parser.addArgument("-i", str)
+    parser.addArgument('-o', str, default=join(getcwd(), "ASCIIGen_out.txt"))
+    parser.addArgument('--charset', str, default='@%#*+=-:. ')
+    parser.addArgument("--res", float, default=1)
+    return parser.parseArguments()
 
-
-def main(opt):
-    if opt.mode == "simple":
-        CHAR_LIST = '@%#*+=-:. '
-    else:
-        CHAR_LIST = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
+def generateText(opt):
+    CHAR_LIST = opt.charset
     num_chars = len(CHAR_LIST)
-    num_cols = opt.num_cols
-    image = cv2.imread(opt.input)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    height, width = image.shape
-    cell_width = width / opt.num_cols
-    cell_height = 2 * cell_width
-    num_rows = int(height / cell_height)
-    if num_cols > width or num_rows > height:
-        print("Too many columns or rows. Use default setting")
-        cell_width = 6
-        cell_height = 12
-        num_cols = int(width / cell_width)
-        num_rows = int(height / cell_height)
+    
+    cell_height = int(50 / opt.res)
+    font = ImageFont.truetype("fonts/DejaVuSansMono.ttf", size=cell_height)
+    cell_width, cell_height = font.getsize(' ')
 
-    output_file = open(opt.output, 'w')
+    image = imread(opt.i)
+    image = cvtColor(image, COLOR_BGR2GRAY)
+    
+    height, width = image.shape
+    num_cols = int(width / cell_width)
+    num_rows = int(height / cell_height)
+
+
+    output_text = ""
     for i in range(num_rows):
         for j in range(num_cols):
-            output_file.write(
+            output_text += (
                 CHAR_LIST[min(int(np.mean(image[int(i * cell_height):min(int((i + 1) * cell_height), height),
                                           int(j * cell_width):min(int((j + 1) * cell_width),
                                                                   width)]) * num_chars / 255), num_chars - 1)])
-        output_file.write("\n")
+        output_text+='\n'
+    return output_text
+
+def main(opt):
+    output_file = open(opt.o, 'w')
+    output_file.write(generateText(opt))
     output_file.close()
 
 
