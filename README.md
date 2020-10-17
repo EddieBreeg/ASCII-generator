@@ -2,85 +2,74 @@
 
 ## Introduction
 
-Here is my python source code for ASCII generator. with my code, you could: 
-* **Given input image, you could generate ASCII art stored under text format (.txt)**
-* **Given input image, you could generate ASCII art stored under image formats (.png, .jpg, ...). In each format, there are 2 options: Black background and white characters, or vice versa**
-* **Given input video, you could generate ASCII art stored under video formats (.avi, .mp4, ...)**
+As you can tell by its name, this little software is a set of scripts which allow you to convert media to ASCII art.\
+Please note that this repository is a fork from another one made by [uvipen](https://github.com/uvipen), which you can find [here](https://github.com/uvipen/ASCII-generator). This means I didn't write the original code, I only modified it and added some.
+
+With that out of the way, here is the list of what you can do:
+- Convert an image to text
+- Convert text to an image
+- Convert an image to an ASCII art version
+- Convert a video to an ASCII art version
 
 ## Video to video
-By running the sript **video2video.py** with different values for *background* and *mode*, we will have following outputs:
-<p align="center">
-  <img src="demo/input.gif" width=800><br/>
-  <i>Input video</i>
-</p>
 
-<p align="center">
-  <img src="demo/demo_simple_white_100.gif" width=800><br/>
-  <i>White-background simple-character ASCII output</i>
-</p>
+*Note: this script has not been modified from the original*
 
-<p align="center">
-  <img src="demo/demo_simple_black_100.gif" width=800><br/>
-  <i>Black-background simple-character ASCII output</i>
-</p>
+Converts a video file to an ASCII art verion.\
+Usage: `video2video.py --input <input_path> --output <output_path> --mode <simple/complex> --background <black/white> --num_cols <int> --scale <int> --fps <int> --overlay_ratio <float>`
 
-<p align="center">
-  <img src="demo/demo_complex_white_100.gif" width=800><br/>
-  <i>White-background complex-character ASCII output</i>
-</p>
-
-<p align="center">
-  <img src="demo/demo_complex_black_100.gif" width=800><br/>
-  <i>Black-background complex-character ASCII output</i>
-</p>
+For a complete demo of the results you can get, please follow [this link](https://github.com/uvipen/ASCII-generator/blob/master/README.md)
 
 ## Image to text
-By running the sript **img2txt.py** with different values for *mode*, we will have following outputs:
-<p align="center">
-  <img src="demo/input.jpg" width=800><br/>
-  <i>Input image</i>
-</p>
 
-<p align="center">
-  <img src="demo/demo_image_simple.png" width=800><br/>
-  <i>Simple character ASCII output</i>
-</p>
+Converts an image to text.\
+Usage: `img2txt.py -i <input_path> -o <output_path> --res <float> --charset <str>`
 
-<p align="center">
-  <img src="demo/demo_image_complex.png" width=800><br/>
-  <i>Complex character ASCII output</i>
-</p>
+- *res*: the amount of characters used by surface unit. The default is 2. Increasing this value will allow to represent more details from the original image.
+- *charset*: the set of characters to use, in a string. Default is `'@%#*+=-:. '`
+
+## Text to image
+
+Renders text to an image.\
+Usage: `txt2img.py -i <input_path> -o <output_path> --bg <white/black/transparent> --scale <float>`
+
+- *bg*: the background color of the output image.
+- *scale*: the scale of the font/output image. Default is 2.5.
+
+Note that the aspect ratio of the result may not be exactly the same as for the original, which can be fixed easily with any image editor. 
 
 ## Image to image
-By running the sript **img2img.py** with different values for *background* and *mode*, we will have following outputs:
-<p align="center">
-  <img src="demo/input.jpg" width=800><br/>
-  <i>Input image</i>
-</p>
 
-<p align="center">
-  <img src="demo/output_simple_white_200.jpg" width=800><br/>
-  <i>White-background simple-character ASCII output</i>
-</p>
+This script (`img2img.py`) does exactly what the two previous ones do, to combine the process into a single step. It uses the exact same arguments as seen above.
 
-<p align="center">
-  <img src="demo/output_simple_black_200.jpg" width=800><br/>
-  <i>Black-background simple-character ASCII output</i>
-</p>
+## Demo
 
-<p align="center">
-  <img src="demo/output_complex_white_200.jpg" width=800><br/>
-  <i>White-background complex-character ASCII output</i>
-</p>
+This is the kind of result you can get with this tool:
 
-<p align="center">
-  <img src="demo/output_complex_black_200.jpg" width=800><br/>
-  <i>Black-background complex-character ASCII output</i>
-</p>
+<div align="center">
+    <i>Input</i><br/>
+    <a href="https://unsplash.com/photos/2Hzmz15wGik" title="Original image">
+      <img src="demo/landscape.jpg" width="75%">
+    </a>
+</div>
+<div align="center">
+    <i>Output</i><br/>
+    <img src="demo/land_ascii.png" width="75%">
+</div>
+<div align="center">
+    <i>Input</i><br/>
+    <a href="https://unsplash.com/photos/R5scocnOOdM" title="Original image">
+      <img src="demo/Paris.jpg" width="75%">
+    </a>
+</div>
+<div align="center">
+    <i>Output</i><br/>
+    <img src="demo/Paris_ascii.png" width="75%">
+</div>
 
 ## Requirements
 
-* **python 3.6**
+* **python >=3.6**
 * **cv2**
 * **PIL** 
 * **numpy**

@@ -3,6 +3,7 @@ from os.path import join
 from ArgumentParser import ArgumentParser
 from PIL import Image, ImageDraw, ImageFont
 
+
 def generateImg(text, args):
     colorCodes = {
         "white": (255,255,255),
@@ -15,7 +16,7 @@ def generateImg(text, args):
         mode = "RGB"
 
     fontHeight = int(10 * args.scale)
-    font = ImageFont.truetype("fonts/DejaVuSansMono.ttf", size=fontHeight)
+    font = ImageFont.truetype("../fonts/DejaVuSansMono.ttf", size=fontHeight)
 
 
     size = font.getsize_multiline(text)

@@ -1,6 +1,3 @@
-"""
-@author: Viet Nguyen <nhviet1009@gmail.com>
-"""
 import ArgumentParser
 from cv2 import imread, cvtColor, COLOR_BGR2GRAY
 from PIL import ImageFont
@@ -13,7 +10,7 @@ def get_args():
     parser.addArgument("-i", str)
     parser.addArgument('-o', str, default=join(getcwd(), "ASCIIGen_out.txt"))
     parser.addArgument('--charset', str, default='@%#*+=-:. ')
-    parser.addArgument("--res", float, default=1)
+    parser.addArgument("--res", float, default=2)
     return parser.parseArguments()
 
 def generateText(opt):
@@ -21,7 +18,7 @@ def generateText(opt):
     num_chars = len(CHAR_LIST)
     
     cell_height = int(50 / opt.res)
-    font = ImageFont.truetype("fonts/DejaVuSansMono.ttf", size=cell_height)
+    font = ImageFont.truetype("../fonts/DejaVuSansMono.ttf", size=cell_height)
     cell_width, cell_height = font.getsize(' ')
 
     image = imread(opt.i)
